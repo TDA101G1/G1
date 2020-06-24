@@ -26,7 +26,7 @@ public class CouponService {
 	}
 
 	public CouponVO update(String coupon_ID, String emp_ID, String member_ID, String coupon_Name, Double coupon_Class,
-			String coupon_Number, String coupon_Info, Integer coupon_State) {
+			String coupon_Number, String coupon_Info, Integer coupon_State,Timestamp coupon_Date) {
 
 		CouponVO couponVO = new CouponVO();
 
@@ -38,6 +38,7 @@ public class CouponService {
 		couponVO.setCoupon_Number(coupon_Number);
 		couponVO.setCoupon_Info(coupon_Info);
 		couponVO.setCoupon_State(coupon_State);
+		couponVO.setCoupon_Date(coupon_Date);
 
 		dao.update(couponVO);
 

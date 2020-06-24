@@ -17,6 +17,14 @@ public class ProductService {
 		}
 		return null;
 	}
+	
+	public ProductVO updateWith(ProductVO productVO ,ProductDetailVO productDetailVO){
+		if(productVO != null && productDetailVO != null){
+			return  dao.updateWithProduct_Ditel(productVO, productDetailVO);
+		}
+		return null;
+	}
+  //  加的到此	
 
 	public Integer update(ProductVO productVO) {
 		if (productVO != null) {
@@ -54,6 +62,7 @@ public class ProductService {
 		return dao.getAll();
 	}
 	
+
 	public List<ProductVO> searchData(String query) {
 		List<ProductVO> result = null;
 		if(query != null && query.length() != 0) {
@@ -61,6 +70,15 @@ public class ProductService {
 		}
 		return result;
 	}
+	
+	public ProductVO inserWith(ProductVO productVO ,ProductDetailVO productDetailVO){
+		if(productVO != null && productDetailVO != null){
+			return  dao.inserWithProduct_Ditel(productVO, productDetailVO);
+		}
+		return null;
+	}
+	
+	
 	
 	public List<ProductVO> getFilterClass(String product_Class) {
 		List<ProductVO> productList = new ProductService().getAll();

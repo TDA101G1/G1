@@ -21,7 +21,7 @@ public class JedisShoppingCar {
 	public String add(String member_ID, String product_ID, String product_Name,
 			String productDetail_ID, String quantity, String spc, String start, String end, String price) throws JSONException {
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		
 		System.out.println(productDetail_ID);
 		System.out.println(price);
@@ -104,7 +104,7 @@ public class JedisShoppingCar {
 	public JSONObject update(String member_ID, String product_ID, String product_Name, String productDetail_ID, 
 			String quantity, String spc, String start, String end, String price, String index,  String addTime) throws JSONException {
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		
 		String replaceID = member_ID.replace("MID", "");
 		JSONArray jsonArray = new JSONArray(jedis.lrange("member:"+replaceID+":shoppingCar", 0, -1));
@@ -136,7 +136,7 @@ public class JedisShoppingCar {
 	//移除購物車內單筆商品
 	public JSONObject delete(String member_ID, String index, String addTime, String start, String end) {
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		String replaceID = member_ID.replace("MID", "");
 		JSONArray jsonArray = new JSONArray(jedis.lrange("member:"+replaceID+":shoppingCar", 0, -1));
 		if(!jsonArray.isEmpty()) {
@@ -156,7 +156,7 @@ public class JedisShoppingCar {
 	//移除購物車內複數商品
 	public JSONObject removeGoods(String member_ID, String jsonArr) {
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		String replaceID = member_ID.replace("MID", "");
 		JSONArray jsonArray = new JSONArray(jsonArr);
 		if(!jsonArray.isEmpty()) {
@@ -175,7 +175,7 @@ public class JedisShoppingCar {
 	//移除購物車內已經失效的商品
 	public JSONObject removeFailureGoods(String member_ID, String jsonArr) {
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		String replaceID = member_ID.replace("MID", "");
 		JSONArray jsonArrayAll = new JSONArray(jedis.lrange("member:"+replaceID+":shoppingCar", 0, -1));
 		JSONArray jsonArray = new JSONArray(jsonArr);
@@ -212,7 +212,7 @@ public class JedisShoppingCar {
 	//載入shoppingCar.jsp，拿到該會員的購物車資訊，轉成list給jsp處理 
 	public List<ProductVO> getMemberCar(String member_id){
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		List<ProductVO> list = new ArrayList<>();
 		String replaceID = member_id.replace("MID", "");
 		JSONArray jsonArray = new JSONArray(jedis.lrange("member:"+replaceID+":shoppingCar", 0, -1).toString());
@@ -237,7 +237,7 @@ public class JedisShoppingCar {
 	//確認購物車內的會員所選的商品規格與數量
 	public JSONArray getMemberSelected(String member_id){
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		String replaceID = member_id.replace("MID", "");
 		JSONArray jsonArray = new JSONArray(jedis.lrange("member:"+replaceID+":shoppingCar", 0, -1).toString());
 		jedis.close();
@@ -247,7 +247,7 @@ public class JedisShoppingCar {
 	//前往結帳做的檢查
 	public String goCheckout(String member_ID, String jsonArr) {
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		
 		String replaceID = member_ID.replace("MID", "");
 		JSONArray jsonArray = new JSONArray(jsonArr);
@@ -292,7 +292,7 @@ public class JedisShoppingCar {
 	//先為確認付款做檢查，轉成orderDetailVO，準備新增訂單
 	public List<OrderDetailVO> createOrderDetaillList(String member_ID, String jsonArr) {
 		Jedis jedis = new Jedis("localhost", 6379);
-		jedis.auth("123456");
+//		jedis.auth("123456");
 		
 		String replaceID = member_ID.replace("MID", "");
 		JSONArray jsonArray = new JSONArray(jsonArr);

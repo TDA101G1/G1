@@ -143,19 +143,20 @@ public class CouponDAO_JDBC implements CouponDAO_interface {
 					e.printStackTrace(System.err);
 				}
 			}
+			
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					e2.printStackTrace(System.err);
+				}
+			}
 			if (con != null) {
 				try {
 					con.setAutoCommit(true);
 					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
-				}
-			}
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e2) {
-					e2.printStackTrace(System.err);
 				}
 			}
 		}
@@ -186,28 +187,26 @@ public class CouponDAO_JDBC implements CouponDAO_interface {
 			ps.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-		} catch (SQLException e) {
-			try {
-				con.rollback();
-				throw new RuntimeException("A database error occured. " + e.getMessage());
-			} catch (SQLException se) {
-				se.printStackTrace(System.err);
-			}
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (ps != null) {
 				try {
-					con.setAutoCommit(true);
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
 			}
 			if (con != null) {
 				try {
 					con.close();
-				} catch (Exception e2) {
-					e2.printStackTrace(System.err);
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -304,24 +303,11 @@ public class CouponDAO_JDBC implements CouponDAO_interface {
 		} catch (SQLException e) {
 			throw new RuntimeException("database error" + e.getMessage());
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace(System.err);
-				}
-			}
+			
 			if (ps != null) {
 				try {
 					ps.close();
 				} catch (SQLException e) {
-					e.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
 			}
@@ -332,6 +318,14 @@ public class CouponDAO_JDBC implements CouponDAO_interface {
 					e2.printStackTrace();
 				}
 			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			
 		}
 		return couponVO;
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Common.common;
-
+import com.order.model.OrderDetailVO;
 
 public class ProductDetailDAO_JDBC implements ProductDetailDAO {
 	private static final String INSERT_SQL = "INSERT INTO PRODUCT_DETAIL (PRODUCT_DETAIL_ID, PRODUCT_ID, PRODUCT_DETAIL_SPC, PRODUCT_DETAIL_MONEY, PRODUCT_DETAIL_INSTOCK, PRODUCT_DETAIL_SAFTYSTOCK, PRODUCT_DETAIL_DATE) VALUES (('PDID'||LPAD(TO_CHAR(SEQ_PRODUCT_DETAIL_ID.NEXTVAL),6,'0')),?,?,?,?,?,?)";
@@ -307,6 +307,53 @@ public class ProductDetailDAO_JDBC implements ProductDetailDAO {
 			}
 		}
 	}
+	
+	//新加的
+	public void insert2 (ProductDetailVO product_DetailVO, Connection con) {
 
+		PreparedStatement ps = null;
+
+		try {
+
+     		ps = con.prepareStatement(INSERT_SQL);
+
+     		ps.setString(1, product_DetailVO.getProduct_ID());
+			ps.setString(2, product_DetailVO.getProduct_Detail_Spc());
+			ps.setInt(3, product_DetailVO.getProduct_Detail_Money());
+			ps.setInt(4, product_DetailVO.getProduct_Detail_Instock());
+			ps.setInt(5, product_DetailVO.getProduct_Detail_Saftystock());
+			ps.setDate(6, product_DetailVO.getProduct_Detail_Date());
+			ps.executeUpdate();
+			
+			
+
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-Detail");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 
 }

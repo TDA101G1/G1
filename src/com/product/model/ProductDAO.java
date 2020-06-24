@@ -9,4 +9,7 @@ public interface ProductDAO {
 	public ProductVO select(String product_ID);
 	public List<ProductVO> getAll();
 	public List<ProductVO> searchData(String query);
+	//新增的
+	public ProductVO inserWithProduct_Ditel(ProductVO PVO,ProductDetailVO PDVO);
+	public ProductVO updateWithProduct_Ditel(ProductVO PVO,ProductDetailVO PDVO);
 }

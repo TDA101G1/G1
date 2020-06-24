@@ -256,6 +256,219 @@ public class ProductDAO_JDBC implements ProductDAO {
 		}
 		return list;
 	}
+	
+	@Override
+	public ProductVO inserWithProduct_Ditel(ProductVO productVO, ProductDetailVO pdVO) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+
+			Class.forName(common.DRIVER);
+			con = DriverManager.getConnection(common.URL, common.USERID, common.PASSWD);
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+
+			// 先新增主黨
+			String cols[] = { "Product_ID" };
+			ps = con.prepareStatement(INSERT_SQL, cols);
+			
+			ps.setString(1, productVO.getProduct_Name());
+			ps.setString(2, productVO.getProduct_Intro());
+			ps.setDouble(3, productVO.getProduct_Staytime());
+			ps.setString(4, productVO.getProduct_Address());
+			ps.setDouble(5, productVO.getProduct_Latitutde());
+			ps.setDouble(6, productVO.getProduct_Longitude());
+			ps.setString(7, productVO.getProduct_County());
+			ps.setString(8, productVO.getProduct_Class());
+			ps.setString(9, productVO.getProduct_Style());
+			ps.setInt(10, productVO.getProduct_Seq());
+			ps.setInt(11, productVO.getProduct_State());
+			ps.setInt(12, productVO.getProduct_Sale_Rec());
+			ps.setInt(13, productVO.getProduct_Click_Rec());
+			ps.setString(14, productVO.getProduct_Total_Schedule());
+			ps.setString(15, productVO.getProduct_Info()); // 結至5/18，只能輸入100-300MB的資料
+			ps.setBytes(16, productVO.getProduct_Img1());
+			ps.setBytes(17, productVO.getProduct_Img2());
+			ps.setBytes(18, productVO.getProduct_Img3());
+			ps.setBytes(19, productVO.getProduct_Img4());
+			ps.setBytes(20, productVO.getProduct_Img5());
+
+			ps.executeUpdate();
+			// 掘取對應的自增主鍵值
+			
+			String next_pid = null;
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				next_pid = rs.getString(1);
+				System.out.println("自增主鍵值= " + next_pid + "(剛新增成功的部門編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			// 再同時新增明細
+			ProductDetailDAO_JDBC dao = new ProductDetailDAO_JDBC();
+			ProductDetailVO aPD = new ProductDetailVO();
+			System.out.println("同時新增一筆商品明細=");
+			
+			aPD.setProduct_ID(new String(next_pid));
+			aPD.setProduct_Detail_Instock(pdVO.getProduct_Detail_Instock());
+			aPD.setProduct_Detail_Money(pdVO.getProduct_Detail_Money());
+			aPD.setProduct_Detail_Saftystock(pdVO.getProduct_Detail_Saftystock());
+			aPD.setProduct_Detail_Spc(pdVO.getProduct_Detail_Spc());
+
+			dao.insert2(aPD, con);
+			
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			System.out.println("新增商品主黨編號" + next_pid + "時,共有明細" + 1 + "同時被新增");
+			
+			return productVO;
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-Product");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	@Override
+	public ProductVO updateWithProduct_Ditel(ProductVO productVO, ProductDetailVO pdVO) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+
+			Class.forName(common.DRIVER);
+			con = DriverManager.getConnection(common.URL, common.USERID, common.PASSWD);
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+
+			// 先新增主黨
+			ps = con.prepareStatement(UPDATE_SQL);
+			
+			ps.setString(1, productVO.getProduct_Name());
+			ps.setString(2, productVO.getProduct_Intro());
+			ps.setDouble(3, productVO.getProduct_Staytime());
+			ps.setString(4, productVO.getProduct_Address());
+			ps.setDouble(5, productVO.getProduct_Latitutde());
+			ps.setDouble(6, productVO.getProduct_Longitude());
+			ps.setString(7, productVO.getProduct_County());
+			ps.setString(8, productVO.getProduct_Class());
+			ps.setString(9, productVO.getProduct_Style());
+			ps.setInt(10, productVO.getProduct_Seq());
+			ps.setInt(11, productVO.getProduct_State());
+			ps.setInt(12, productVO.getProduct_Sale_Rec());
+			ps.setInt(13, productVO.getProduct_Click_Rec());
+			ps.setString(14, productVO.getProduct_Total_Schedule());
+			ps.setString(15, productVO.getProduct_Info()); 
+			ps.setBytes(16, productVO.getProduct_Img1());
+			ps.setBytes(17, productVO.getProduct_Img2());
+			ps.setBytes(18, productVO.getProduct_Img3());
+			ps.setBytes(19, productVO.getProduct_Img4());
+			ps.setBytes(20, productVO.getProduct_Img5());
+			ps.setString(21, productVO.getProduct_ID());
+
+			ps.executeUpdate();
+			// 掘取對應的自增主鍵值
+			
+			
+			// 再同時新增明細
+			ProductDetailDAO_JDBC dao = new ProductDetailDAO_JDBC();
+			ProductDetailVO aPD = new ProductDetailVO();
+			
+			
+			aPD.setProduct_ID( pdVO.getProduct_ID());
+			aPD.setProduct_Detail_ID(pdVO.getProduct_Detail_ID());
+			aPD.setProduct_Detail_Instock(pdVO.getProduct_Detail_Instock());
+			aPD.setProduct_Detail_Money(pdVO.getProduct_Detail_Money());
+			aPD.setProduct_Detail_Saftystock(pdVO.getProduct_Detail_Saftystock());
+			aPD.setProduct_Detail_Spc(pdVO.getProduct_Detail_Spc());
+			aPD.setProduct_Detail_Date(pdVO.getProduct_Detail_Date());
+			
+			System.out.println("同時修改一筆商品明細=" +aPD);
+
+
+			dao.update2(aPD, con);
+			
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			
+			return productVO;
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-Product");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
 	public static void main(String[] args) {
 		ProductDAO_JDBC pDAO = new ProductDAO_JDBC();
 

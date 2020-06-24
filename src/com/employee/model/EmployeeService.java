@@ -1,5 +1,8 @@
 package com.employee.model;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import com.coupon.model.CouponVO;
@@ -49,6 +52,22 @@ public class EmployeeService {
 
 	}
 
+	public EmployeeVO login(String emp_Account, String emp_Pwd) {
+
+		EmployeeVO employeeVO = dao.select(emp_Account);
+		if (employeeVO != null) {
+			if (emp_Pwd != null && emp_Pwd.trim().length() != 0) {
+				String pass = employeeVO.getEmp_Pwd();
+				if (pass.equals(emp_Pwd)) {
+					return employeeVO;
+				}
+			}
+		}
+		return employeeVO;
+	}
+	
+	
+
 	public void delete(String emp_ID) {
 		dao.delete(emp_ID);
 	}
@@ -72,29 +91,41 @@ public class EmployeeService {
 
 		java.sql.Date date = new java.sql.Date(aa);
 
-		VO.setEmp_Account("111");
-		VO.setEmp_Pwd("22");
-		VO.setEmp_Grade("3");
-		VO.setEmp_Name("454");
-		VO.setEmp_Sex("5");
-		VO.setEmp_Birth(null);
-		VO.setEmp_Mail("11");
-		VO.setEmp_Phone("000");
-		VO.setEmp_Address("111");
-		VO.setEmp_Est_Time(null);
-		VO.setEmp_Img(null);
-		VO.setEmp_State(1);
+		byte[] image = null;
+		try {
+			FileInputStream fin = new FileInputStream("C:\\Users\\User\\Desktop\\S__17367045.jpg");
+			BufferedInputStream bin = new BufferedInputStream(fin);
+			image = new byte[bin.available()];
+			fin.read(image);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		System.out.println(dao.insert(VO));
+//		VO.setEmp_Account("9999");
+//		VO.setEmp_Pwd("22");
+//		VO.setEmp_Grade("3");
+//		VO.setEmp_Name("454");
+//		VO.setEmp_Sex("5");
+//		VO.setEmp_Birth(date);
+//		VO.setEmp_Mail("11");
+//		VO.setEmp_Phone("000");
+//		VO.setEmp_Address("456456");
+//		VO.setEmp_Est_Time(date);
+//		VO.setEmp_Img(image);
+//		VO.setEmp_State(1);
 
-//		System.out.println(dao.getAll());
+//		System.out.println(dao.insert(VO));
+		
+//		System.out.println(dao.login("ALEX","alex"));
+
+		System.out.println(dao.getAll());
 
 //		System.out.println(dao.getOne("EID000013"));
 
 //		dao.insert("5", "1", "1", "1", "1", date, "1", "1", "1", date, null, 1);
 //		dao.update("E000000","123123", "1", "1", "1", "1", date, "1", "1", "1", date, null, 1);
 
-//		System.out.println(dao.getAll());
+//	System.out.println(dao.getAll());
 	}
 
 }

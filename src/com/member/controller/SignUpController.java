@@ -62,6 +62,10 @@ public class SignUpController extends HttpServlet {
 				in.close();
 //Name
 				String member_NameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				String member_AccountReg = "^[(a-zA-Z0-9)]{2,10}$";
+				String member_PwdReg = "^[(a-zA-Z0-9)]{2,10}$";
+				String member_MailReg = "[a-zA-Z0-9_]{4,12}@[a-zA-Z0-9]+(\\.[a-zA-Z]+){1,3}";
+				String member_PhoneReg = "^[0][9]\\d{8}$";
 				if(member_Name == null || member_Name.trim().length() == 0) {
 					errorMsgs.put("name_empty", "Please input your Name");
 				}
@@ -72,18 +76,26 @@ public class SignUpController extends HttpServlet {
 //Account		
 				if(member_Account == null || member_Account.trim().length() == 0) {
 					errorMsgs.put("account_empty", "Please input your account");
+				}else if (!member_Account.trim().matches(member_AccountReg)) {
+					errorMsgs.put("account_empty", "只能是英文字母和數字 , 且長度必需在2到10之間");
 				}
 //Password
 				if(member_Pwd == null || member_Pwd.trim().length() == 0) {
 					errorMsgs.put("password_empty", "Please input your password");
+				}else if(!member_Pwd.trim().matches(member_PwdReg)) {
+					errorMsgs.put("password_empty", "只能是英文字母和數字 , 且長度必需在2到10之間d");
 				}
 //Phone			
 				if(member_Phone == null || member_Phone.trim().length() == 0) {
 					errorMsgs.put("phone_empty", "Please input your phone");
+				}else if(!member_Phone.trim().matches(member_PhoneReg)) {
+					errorMsgs.put("phone_empty", "電話必須是09開頭的十碼數字");
 				}
 //mail
 				if(member_Mail == null || member_Mail.trim().length() == 0) {
 					errorMsgs.put("mail_empty", "Please input your Email");
+				}else if(!member_Mail.trim().matches(member_MailReg)) {
+					errorMsgs.put("mail_empty", "格式錯誤");
 				}
 //address
 				if(member_AddressDetail == null || member_AddressDetail.trim().length() == 0) {

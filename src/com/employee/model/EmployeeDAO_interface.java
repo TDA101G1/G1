@@ -12,4 +12,6 @@ public interface EmployeeDAO_interface {
 	public EmployeeVO getOne(String emp_ID);
 
 	public List<EmployeeVO> getAll();
+	
+	public EmployeeVO select(String emp_Account );
 }
