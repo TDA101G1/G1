@@ -374,28 +374,28 @@
                             <aside class="aside1">
                                 <c:choose>
 								 <c:when test="${errors.date == null}">
-								 	<span>日期：</span><input class="user_date" type="text" name="date" value="${errorReturnBean.cust_Schedule_Name}"><br>
+								 	<span>&emsp;&emsp;日期：</span><input class="user_date" type="text" name="date" value="${errorReturnBean.cust_Schedule_Name}"><br>
 								 </c:when>
                                  <c:otherwise>
-                                 	<span>日期：</span><input class="user_date" type="text" name="date" placeholder="${errors.date}"><br>
+                                 	<span>&emsp;&emsp;日期：</span><input class="user_date" type="text" name="date" placeholder="${errors.date}"><br>
                                  </c:otherwise>
                                 </c:choose>
                                 
                                 <c:choose>
 								 <c:when test="${errors.quantity == null}">
-								 	<span>人數：</span><input type="text" name="cust_quantity" value="${errorReturnBean.cust_Quantity}"><br>
+								 	<span>&emsp;&emsp;人數：</span><input type="text" name="cust_quantity" value="${errorReturnBean.cust_Quantity}"><br>
 								 </c:when>
                                  <c:otherwise>
-                                 	<span>人數：</span><input type="text" name="cust_quantity" placeholder="${errors.quantity}"><br>
+                                 	<span>&emsp;&emsp;人數：</span><input type="text" name="cust_quantity" placeholder="${errors.quantity}"><br>
                                  </c:otherwise>
                                 </c:choose>
                                 
                                 <c:choose>
 								 <c:when test="${errors.position == null}">
-								 	<span>起始地點：</span><input id="geolocation" type="text" name="cust_address" value="${errorReturnBean.cust_Position}" style="margin-right: 39px;"><br>
+								 	<span>起始地點：</span><input id="geolocation" type="text" name="cust_address" value="${errorReturnBean.cust_Position}"><br>
 								 </c:when>
                                  <c:otherwise>
-                                 	<span>地點：</span><input id="geolocation" type="text" name="cust_address" placeholder="${errors.position}"><br>
+                                 	<span>起始地點：</span><input id="geolocation" type="text" name="cust_address" placeholder="${errors.position}"><br>
                                  </c:otherwise>
                                 </c:choose>
                                 <input id="geolocation_number" type="hidden" name="cust_position">
@@ -437,8 +437,8 @@
                     <div class="row">
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="img_block0">
-                                <img class="基隆" name="基隆"
-                                    src="<%=request.getContextPath()%>/img/hui/基隆.png" data-sort="0">
+                                <img class="基隆市" name="基隆市"
+                                    src="<%=request.getContextPath()%>/img/hui/基隆市.png" data-sort="0">
                             </div>
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
@@ -449,20 +449,20 @@
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
                             <div class="img_block2">
-                                <img class="桃園" name="桃園"
-                                    src="<%=request.getContextPath()%>/img/hui/桃園.png" data-sort="2">
+                                <img class="桃園市" name="桃園市"
+                                    src="<%=request.getContextPath()%>/img/hui/桃園市.png" data-sort="2">
                             </div>
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="img_block3">
-                                <img class="新竹" name="新竹"
-                                    src="<%=request.getContextPath()%>/img/hui/新竹.png" data-sort="3">
+                                <img class="新竹市" name="新竹市"
+                                    src="<%=request.getContextPath()%>/img/hui/新竹市.png" data-sort="3">
                             </div>
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="img_block4">
-                                <img class="苗栗" name="苗栗"
-                                    src="<%=request.getContextPath()%>/img/hui/苗栗.png" data-sort="4">
+                                <img class="苗栗市" name="苗栗市"
+                                    src="<%=request.getContextPath()%>/img/hui/苗栗市.png" data-sort="4">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
@@ -473,20 +473,20 @@
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="img_block6">
-                                <img class="南投" name="南投"
-                                    src="<%=request.getContextPath()%>/img/hui/南投.png" data-sort="6">
+                                <img class="南投市" name="南投市"
+                                    src="<%=request.getContextPath()%>/img/hui/南投市.png" data-sort="6">
                             </div>
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="img_block7">
-                                <img class="雲林" name="雲林"
-                                    src="<%=request.getContextPath()%>/img/hui/雲林.png" data-sort="7">
+                                <img class="雲林市" name="雲林市"
+                                    src="<%=request.getContextPath()%>/img/hui/雲林市.png" data-sort="7">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
                             <div class="img_block8">
-                                <img class="嘉義" name="嘉義"
-                                    src="<%=request.getContextPath()%>/img/hui/嘉義.png" data-sort="8">
+                                <img class="嘉義市" name="嘉義市"
+                                    src="<%=request.getContextPath()%>/img/hui/嘉義市.png" data-sort="8">
                             </div>
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
@@ -497,32 +497,32 @@
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="img_block10">
-                                <img class="高雄" name="高雄"
-                                    src="<%=request.getContextPath()%>/img/hui/高雄.png" data-sort="10">
+                                <img class="高雄市" name="高雄市"
+                                    src="<%=request.getContextPath()%>/img/hui/高雄市.png" data-sort="10">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
                             <div class="img_block11">
-                                <img class="屏東" name="屏東"
-                                    src="<%=request.getContextPath()%>/img/hui/屏東.png" data-sort="11">
+                                <img class="屏東市" name="屏東市"
+                                    src="<%=request.getContextPath()%>/img/hui/屏東市.png" data-sort="11">
                             </div>
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="img_block12">
-                                <img class="宜蘭" name="宜蘭"
-                                    src="<%=request.getContextPath()%>/img/hui/宜蘭.png" data-sort="12">
+                                <img class="宜蘭市" name="宜蘭市"
+                                    src="<%=request.getContextPath()%>/img/hui/宜蘭市.png" data-sort="12">
                             </div>
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="img_block13">
-                                <img class="花蓮" name="花蓮"
-                                    src="<%=request.getContextPath()%>/img/hui/花蓮.png" data-sort="13">
+                                <img class="花蓮市" name="花蓮市"
+                                    src="<%=request.getContextPath()%>/img/hui/花蓮市.png" data-sort="13">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
                             <div class="img_block14">
-                                <img class="台東" name="台東"
-                                    src="<%=request.getContextPath()%>/img/hui/台東.png" data-sort="14">
+                                <img class="台東市" name="台東市"
+                                    src="<%=request.getContextPath()%>/img/hui/台東市.png" data-sort="14">
                             </div>
                         </div>
                     </div>

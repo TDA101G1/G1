@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 
 //ProductCmtService dao = new ProductCmtService();
@@ -787,6 +788,7 @@
       box-shadow: 0 0 1px;
       display: inline-block;
       vertical-align: top;
+      margin: 0 auto;
     }
 
     li.product_cmt_content {
@@ -966,6 +968,13 @@
     .test{
       border: 5px solid tomato;
     }
+
+    /*--------------------RWD---------------------*/
+    @media screen and (max-width:1440px){
+      div.current_date span{
+        font-size: 20px;
+      }
+    }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <!-- <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_orange.css"> -->
@@ -999,7 +1008,7 @@
 
   <div class="container-fluid">
     <div class="row" id="first_row">
-      <div class="col-12 col-md-3 col-sm-12" style="padding: 0;">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3" style="padding: 0;">
         <div class="input_title" data-schedule-id="${custVO.cust_Schedule_ID}" data-member-id="${custVO.member_ID}"
           data-quantity="${custVO.cust_Quantity}" data-position="${custVO.cust_Position}"
           data-selected-county="${custVO.cust_Selected_County}">
@@ -1012,9 +1021,9 @@
           <input type="text" class="update_title -none">
         </div>
       </div>
-      <div class="col-12 col-md-4 col-sm-12" style="padding: 0; text-align: center;">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4" style="padding: 0; text-align: center;">
         <div class="last_change" data-last-time="${custVO.cust_Schedule_Last_Timestamp}">
-          <span>最後修改時間：${custVO.cust_Schedule_Last_Timestamp}</span>
+          <span>最後修改時間：<fmt:formatDate type="both" value="${custVO.cust_Schedule_Last_Timestamp}"/></span>
           <div class="current_date">
             <span>選擇的日期為：${custVO.cust_Schedule_Start_Time} ～ ${custVO.cust_Schedule_End_Time}</span>
           </div>
@@ -1028,7 +1037,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-md-5 col-sm-12">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5">
         <form id="produce" action="<%=request.getContextPath()%>/CustomerizeController" method="POST">
           <div class="btn_model">
             <button id="btnGroupDrop1" type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">共同編輯</button>
@@ -1054,7 +1063,7 @@
     </div>
 
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-2 col-lg-1">
+      <div class="col-12 col-sm-12 col-md-3 col-lg-3  col-xl-1">
         <ul id="sum_day" data-start="${custVO.cust_Schedule_Start_Time}" data-end="${custVO.cust_Schedule_End_Time}"
           data-days="${custVO.cust_Schedule_Total_Day}">
           <!--------------- 動態新增 --------------->
@@ -1066,7 +1075,7 @@
           <img src="https://picsum.photos/200/200/?random=1">
         </div>
       </div>
-      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+      <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-4">
         <div class="schedule_content">
           <div class="schedule_header" data-date="${custVO.cust_Schedule_Start_Time}" data-sort="1">
             <p>Day1</p>
@@ -1083,7 +1092,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
         <div class="product_content">
           <div class="product_header">
             <!-- <span class="product_filter"><i class="fas fa-filter"></i>新增條件</span> -->
@@ -1828,11 +1837,15 @@
       });
       function update_title($this){
         let title = $this.val(); //取得輸入的文字 
-        $("p.text_title").text(title); //將輸入的文字，加入到p標籤，更改文字
-        $("p.text_title").removeClass("-none"); //移除display:none p標籤
-        $("span.edit_title").removeClass("-none"); //移除display:none 筆icon
-        $this.addClass("-none"); //display:none input
-        webSocket.send(JSON.stringify([{"action":"update_title"},{"title":title}]));
+        if(title == "" && title.length == 0){
+          $this.attr("placeholder", "請輸入文字");
+        }else{
+          $("p.text_title").text(title); //將輸入的文字，加入到p標籤，更改文字
+          $("p.text_title").removeClass("-none"); //移除display:none p標籤
+          $("span.edit_title").removeClass("-none"); //移除display:none 筆icon
+          $this.addClass("-none"); //display:none input
+          webSocket.send(JSON.stringify([{"action":"update_title"},{"title":title}]));
+        }
       }
 
       /*==================================================選取卡片的動作==================================================*/
@@ -2716,12 +2729,10 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-1 col-md-1 align-self-center" style="margin-top:50px;">
+                            <div class="col-2 col-md-2 align-self-center" style="margin-top:50px;">
                               <span class="trash" style="cursor: pointer;"><i class="fas fa-trash-alt fa-2x"></i></span>
                             </div>
-                            <div class="col-1 col-md-1 align-self-center" style="margin-top:50px;">
-                              <span><i class="fas fa-bars fa-2x"></i></span>
-                            </div>
+                            
                           </div>
                         </li>`;
 
@@ -2744,12 +2755,10 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-1 col-md-1 align-self-center">
+                            <div class="col-2 col-md-2 align-self-center">
                               <span class="trash" style="cursor: pointer;"><i class="fas fa-trash-alt fa-2x"></i></span>
                             </div>
-                            <div class="col-1 col-md-1 align-self-center">
-                              <span><i class="fas fa-bars fa-2x"></i></span>
-                          </div>
+                           
                         </li>`;
 
       if ($("ul.schedule_list").find("li").hasClass("schedule_block")) {
@@ -2757,6 +2766,13 @@
       } else {
         $("ul.schedule_list").append(no_km);
       }
+      // <div class="col-1 col-md-1 align-self-center" style="margin-top:50px;">
+      //                         <span><i class="fas fa-bars fa-2x"></i></span>
+      //                       </div>
+
+      // <div class="col-1 col-md-1 align-self-center">
+      //                         <span><i class="fas fa-bars fa-2x"></i></span>
+      //                     </div>
     }
       /*==================================================新增行程區塊的function(有距離計算)==================================================*/
       let start;
@@ -2790,12 +2806,10 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-1 col-md-1 align-self-center" style="margin-top:50px;">
+                            <div class="col-2 col-md-2 align-self-center" style="margin-top:50px;">
                               <span class="trash" style="cursor: pointer;"><i class="fas fa-trash-alt fa-2x"></i></span>
                             </div>
-                            <div class="col-1 col-md-1 align-self-center" style="margin-top:50px;">
-                              <span><i class="fas fa-bars fa-2x"></i></span>
-                          </div>
+                            
                         </li>`;
 
       let no_km = `<li class="schedule_block" id="` + product_ID + `"data-sort="` + sort + `" data-latitutde="` + product_Latitutde + `" 
@@ -2817,12 +2831,10 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-1 col-md-1 align-self-center">
+                            <div class="col-2 col-md-2 align-self-center">
                               <span class="trash" style="cursor: pointer;"><i class="fas fa-trash-alt fa-2x"></i></span>
                             </div>
-                            <div class="col-1 col-md-1 align-self-center">
-                              <span><i class="fas fa-bars fa-2x"></i></span>
-                          </div>
+                            
                         </li>`;
 
       if ($("ul.schedule_list").find("li").hasClass("schedule_block")) {
@@ -2830,6 +2842,14 @@
       } else {
         $("ul.schedule_list").append(no_km);
       }
+
+      // <div class="col-1 col-md-1 align-self-center" style="margin-top:50px;">
+      //                         <span><i class="fas fa-bars fa-2x"></i></span>
+      //                      </div>
+
+      // <div class="col-1 col-md-1 align-self-center">
+      //                         <span><i class="fas fa-bars fa-2x"></i></span>
+      //                     </div>
       
       let li_length =  $("ul.schedule_list").children("li").length;
       let directionsService = new google.maps.DirectionsService;
